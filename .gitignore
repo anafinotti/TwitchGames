@@ -6,8 +6,8 @@
 build/
 DerivedData
 Pods/
-Indusval/Indusval.xcworkspace/
-Indusval/Podfile.lock
+TwitchGames.xcodeproj/
+TwitchGames/Podfile.lock
 .DS_Store
 
 ## Various settings
