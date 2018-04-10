@@ -121,6 +121,9 @@
                     </view>
                     <navigationItem key="navigationItem" title="Top Games" id="V6A-Ml-yy8"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <connections>
+                        <outlet property="collectionView" destination="HdV-GT-kmE" id="TXW-jE-LsX"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dxP-ol-hIN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
