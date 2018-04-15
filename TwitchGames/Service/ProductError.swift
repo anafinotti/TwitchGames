@@ -1,5 +1,5 @@
 //
-//  TopGamesError.swift
+//  ProductError.swift
 //  TwitchGames
 //
 //  Created by Ana Finotti on 4/9/18.
@@ -8,14 +8,12 @@
 
 import UIKit
 
-/// Custom error to handle as we want.
-protocol TopGamesErrorProtocol: Error {
+protocol ProductErrorProtocol: Error {
     var name: String { get }
     var id: Int { get }
 }
 
-struct TopGamesError: TopGamesErrorProtocol {
-    
+struct ProductError: ProductErrorProtocol {
     var name: String
     var id: Int
     

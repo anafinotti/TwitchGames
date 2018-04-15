@@ -11,7 +11,7 @@ import UIKit
 protocol HomeView: class {
     func startLoading()
     func finishLoading()
-    func setTopGames(topGames: TopGames)
+    func setProducts(productList: ProductList)
     func showAlert(name: String)
     func dismissSearchControllerIfExists()
 }
@@ -33,18 +33,24 @@ class HomePresenter {
     
     
     // MARK: Service
-    func getTopGames() {
+    func getProducts(page: Int) {
         self.homeView?.startLoading()
         
-        homeService.getTopGames(result: { [weak self] topGames in
+        let parameters = ["show": "sku,name,image",
+            "pageSize": "20",
+            "page": String(page),
+            "apiKey": "WN9pMo0Qd9KFUPfCN6QqAYZi",
+            "format": "json"] as [String : Any]
+        
+        homeService.getProducts(parameters: parameters, result: { [weak self] productList in
             guard let `self` = self else { return }
             self.homeView?.finishLoading()
             
-            guard topGames.top?.count != 0 else {
-                self.homeView?.showAlert(name: "No result found")
+            guard productList.products != nil else {
+                self.homeView?.showAlert(name: "Nenhum produto encontrado")
                 return
             }
-            self.homeView?.setTopGames(topGames: topGames)
+            self.homeView?.setProducts(productList: productList)
 
         }) { [weak self] (error) in
             

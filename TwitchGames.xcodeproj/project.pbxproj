@@ -10,16 +10,19 @@
 		0B31601261B889D9D6205C1F /* Pods_TwitchGamesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFC10D914EC7B93833F8E4B /* Pods_TwitchGamesUITests.framework */; };
 		1E9A75E0D8C8D1CC41D2C2F1 /* Pods_TwitchGames.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9F223AC54CFD368E8171B4E /* Pods_TwitchGames.framework */; };
 		5DBBF940179CCB0205238E8C /* Pods_TwitchGamesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EF316D2E076591188F08A5F /* Pods_TwitchGamesTests.framework */; };
-		B022E637207877C900B0FAD8 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = B022E636207877C900B0FAD8 /* Game.swift */; };
-		B024B0AE207C31C800BC9841 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = B024B0AD207C31C800BC9841 /* Image.swift */; };
-		B024B0B0207C33C600BC9841 /* TopGames.swift in Sources */ = {isa = PBXBuildFile; fileRef = B024B0AF207C33C600BC9841 /* TopGames.swift */; };
-		B024B0B2207C33FA00BC9841 /* Top.swift in Sources */ = {isa = PBXBuildFile; fileRef = B024B0B1207C33FA00BC9841 /* Top.swift */; };
+		B01D61C32080390500EE0B41 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D61C22080390500EE0B41 /* UIImageView+Extension.swift */; };
+		B01D61C52080581300EE0B41 /* CustomFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D61C42080581300EE0B41 /* CustomFlowLayout.swift */; };
+		B01D61C72080597C00EE0B41 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D61C62080597C00EE0B41 /* UIView+Extension.swift */; };
 		B024B0B4207C356D00BC9841 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B024B0B3207C356D00BC9841 /* ApiManager.swift */; };
 		B024B0B8207C364B00BC9841 /* urls.plist in Resources */ = {isa = PBXBuildFile; fileRef = B024B0B7207C364B00BC9841 /* urls.plist */; };
 		B024B0BB207C36D600BC9841 /* TGUrlHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B024B0BA207C36D600BC9841 /* TGUrlHelper.swift */; };
 		B024B0BF207C490900BC9841 /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B024B0BE207C490900BC9841 /* RequestBuilder.swift */; };
-		B024B0C1207C49B600BC9841 /* TopGamesError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B024B0C0207C49B600BC9841 /* TopGamesError.swift */; };
+		B024B0C1207C49B600BC9841 /* ProductError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B024B0C0207C49B600BC9841 /* ProductError.swift */; };
 		B024B0C4207C4BFF00BC9841 /* HomeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B024B0C3207C4BFF00BC9841 /* HomeService.swift */; };
+		B026F8BC2083EC4400689E31 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = B026F8BB2083EC4400689E31 /* Product.swift */; };
+		B026F8BE2083F20600689E31 /* ProductName.swift in Sources */ = {isa = PBXBuildFile; fileRef = B026F8BD2083F20600689E31 /* ProductName.swift */; };
+		B026F8C02083F23B00689E31 /* ProductPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B026F8BF2083F23B00689E31 /* ProductPrice.swift */; };
+		B026F8C22083F35600689E31 /* ProductList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B026F8C12083F35600689E31 /* ProductList.swift */; };
 		B097146620784D4D00517043 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B097146520784D4D00517043 /* AppDelegate.swift */; };
 		B097146B20784D4D00517043 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B097146920784D4D00517043 /* Main.storyboard */; };
 		B097146E20784D4D00517043 /* TwitchGames.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B097146C20784D4D00517043 /* TwitchGames.xcdatamodeld */; };
@@ -32,8 +35,8 @@
 		B097149F20786A8C00517043 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B097149E20786A8C00517043 /* DetailViewController.swift */; };
 		B09714A120786AF000517043 /* HomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B09714A020786AF000517043 /* HomePresenter.swift */; };
 		B099E361207C50330045C2CA /* UICollectionViewCell+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B099E360207C50330045C2CA /* UICollectionViewCell+Extension.swift */; };
-		B099E366207C51520045C2CA /* GameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B099E364207C51520045C2CA /* GameCell.swift */; };
-		B099E367207C51520045C2CA /* GameCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B099E365207C51520045C2CA /* GameCell.xib */; };
+		B099E366207C51520045C2CA /* ProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B099E364207C51520045C2CA /* ProductCell.swift */; };
+		B099E367207C51520045C2CA /* ProductCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B099E365207C51520045C2CA /* ProductCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,16 +63,19 @@
 		6EF316D2E076591188F08A5F /* Pods_TwitchGamesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TwitchGamesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		79FAB543641FF278AC65B19C /* Pods-TwitchGames.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TwitchGames.release.xcconfig"; path = "Pods/Target Support Files/Pods-TwitchGames/Pods-TwitchGames.release.xcconfig"; sourceTree = "<group>"; };
 		AAD1677801CB1A49EAA598D8 /* Pods-TwitchGamesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TwitchGamesTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TwitchGamesTests/Pods-TwitchGamesTests.release.xcconfig"; sourceTree = "<group>"; };
-		B022E636207877C900B0FAD8 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
-		B024B0AD207C31C800BC9841 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
-		B024B0AF207C33C600BC9841 /* TopGames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopGames.swift; sourceTree = "<group>"; };
-		B024B0B1207C33FA00BC9841 /* Top.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Top.swift; sourceTree = "<group>"; };
+		B01D61C22080390500EE0B41 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
+		B01D61C42080581300EE0B41 /* CustomFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFlowLayout.swift; sourceTree = "<group>"; };
+		B01D61C62080597C00EE0B41 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		B024B0B3207C356D00BC9841 /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 		B024B0B7207C364B00BC9841 /* urls.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = urls.plist; sourceTree = "<group>"; };
 		B024B0BA207C36D600BC9841 /* TGUrlHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TGUrlHelper.swift; sourceTree = "<group>"; };
 		B024B0BE207C490900BC9841 /* RequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestBuilder.swift; sourceTree = "<group>"; };
-		B024B0C0207C49B600BC9841 /* TopGamesError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopGamesError.swift; sourceTree = "<group>"; };
+		B024B0C0207C49B600BC9841 /* ProductError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductError.swift; sourceTree = "<group>"; };
 		B024B0C3207C4BFF00BC9841 /* HomeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeService.swift; sourceTree = "<group>"; };
+		B026F8BB2083EC4400689E31 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		B026F8BD2083F20600689E31 /* ProductName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductName.swift; sourceTree = "<group>"; };
+		B026F8BF2083F23B00689E31 /* ProductPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductPrice.swift; sourceTree = "<group>"; };
+		B026F8C12083F35600689E31 /* ProductList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductList.swift; sourceTree = "<group>"; };
 		B097146220784D4D00517043 /* TwitchGames.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitchGames.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B097146520784D4D00517043 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B097146A20784D4D00517043 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -88,8 +94,8 @@
 		B097149E20786A8C00517043 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		B09714A020786AF000517043 /* HomePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenter.swift; sourceTree = "<group>"; };
 		B099E360207C50330045C2CA /* UICollectionViewCell+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+Extension.swift"; sourceTree = "<group>"; };
-		B099E364207C51520045C2CA /* GameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCell.swift; sourceTree = "<group>"; };
-		B099E365207C51520045C2CA /* GameCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GameCell.xib; sourceTree = "<group>"; };
+		B099E364207C51520045C2CA /* ProductCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCell.swift; sourceTree = "<group>"; };
+		B099E365207C51520045C2CA /* ProductCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductCell.xib; sourceTree = "<group>"; };
 		B6D5A5FD65FDF916266FDED5 /* Pods-TwitchGamesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TwitchGamesTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TwitchGamesTests/Pods-TwitchGamesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C9F223AC54CFD368E8171B4E /* Pods_TwitchGames.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TwitchGames.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAFC10D914EC7B93833F8E4B /* Pods_TwitchGamesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TwitchGamesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -153,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				B024B0BA207C36D600BC9841 /* TGUrlHelper.swift */,
+				B01D61C42080581300EE0B41 /* CustomFlowLayout.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -239,10 +246,10 @@
 		B097149820786A0900517043 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				B022E636207877C900B0FAD8 /* Game.swift */,
-				B024B0AD207C31C800BC9841 /* Image.swift */,
-				B024B0AF207C33C600BC9841 /* TopGames.swift */,
-				B024B0B1207C33FA00BC9841 /* Top.swift */,
+				B026F8BB2083EC4400689E31 /* Product.swift */,
+				B026F8BD2083F20600689E31 /* ProductName.swift */,
+				B026F8BF2083F23B00689E31 /* ProductPrice.swift */,
+				B026F8C12083F35600689E31 /* ProductList.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -261,7 +268,7 @@
 				B024B0C2207C4BF100BC9841 /* Home */,
 				B024B0B3207C356D00BC9841 /* ApiManager.swift */,
 				B024B0BE207C490900BC9841 /* RequestBuilder.swift */,
-				B024B0C0207C49B600BC9841 /* TopGamesError.swift */,
+				B024B0C0207C49B600BC9841 /* ProductError.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -270,6 +277,8 @@
 			isa = PBXGroup;
 			children = (
 				B099E360207C50330045C2CA /* UICollectionViewCell+Extension.swift */,
+				B01D61C22080390500EE0B41 /* UIImageView+Extension.swift */,
+				B01D61C62080597C00EE0B41 /* UIView+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -285,8 +294,8 @@
 		B099E363207C51370045C2CA /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				B099E364207C51520045C2CA /* GameCell.swift */,
-				B099E365207C51520045C2CA /* GameCell.xib */,
+				B099E364207C51520045C2CA /* ProductCell.swift */,
+				B099E365207C51520045C2CA /* ProductCell.xib */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -413,7 +422,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B097147320784D4E00517043 /* LaunchScreen.storyboard in Resources */,
-				B099E367207C51520045C2CA /* GameCell.xib in Resources */,
+				B099E367207C51520045C2CA /* ProductCell.xib in Resources */,
 				B097147020784D4E00517043 /* Assets.xcassets in Resources */,
 				B024B0B8207C364B00BC9841 /* urls.plist in Resources */,
 				B097146B20784D4D00517043 /* Main.storyboard in Resources */,
@@ -520,23 +529,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B024B0AE207C31C800BC9841 /* Image.swift in Sources */,
 				B097146E20784D4D00517043 /* TwitchGames.xcdatamodeld in Sources */,
 				B024B0B4207C356D00BC9841 /* ApiManager.swift in Sources */,
 				B099E361207C50330045C2CA /* UICollectionViewCell+Extension.swift in Sources */,
 				B097146620784D4D00517043 /* AppDelegate.swift in Sources */,
 				B097149F20786A8C00517043 /* DetailViewController.swift in Sources */,
-				B024B0B0207C33C600BC9841 /* TopGames.swift in Sources */,
 				B024B0BF207C490900BC9841 /* RequestBuilder.swift in Sources */,
 				B024B0BB207C36D600BC9841 /* TGUrlHelper.swift in Sources */,
+				B026F8C22083F35600689E31 /* ProductList.swift in Sources */,
 				B09714A120786AF000517043 /* HomePresenter.swift in Sources */,
 				B024B0C4207C4BFF00BC9841 /* HomeService.swift in Sources */,
 				B097149D20786A8100517043 /* FavoriteViewController.swift in Sources */,
-				B024B0B2207C33FA00BC9841 /* Top.swift in Sources */,
-				B099E366207C51520045C2CA /* GameCell.swift in Sources */,
+				B026F8C02083F23B00689E31 /* ProductPrice.swift in Sources */,
+				B01D61C32080390500EE0B41 /* UIImageView+Extension.swift in Sources */,
+				B099E366207C51520045C2CA /* ProductCell.swift in Sources */,
 				B097149B20786A5700517043 /* HomeViewController.swift in Sources */,
-				B024B0C1207C49B600BC9841 /* TopGamesError.swift in Sources */,
-				B022E637207877C900B0FAD8 /* Game.swift in Sources */,
+				B01D61C52080581300EE0B41 /* CustomFlowLayout.swift in Sources */,
+				B024B0C1207C49B600BC9841 /* ProductError.swift in Sources */,
+				B026F8BE2083F20600689E31 /* ProductName.swift in Sources */,
+				B01D61C72080597C00EE0B41 /* UIView+Extension.swift in Sources */,
+				B026F8BC2083EC4400689E31 /* Product.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

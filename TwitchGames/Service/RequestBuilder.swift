@@ -11,23 +11,25 @@ import Alamofire
 
 enum RequestBuilder: URLRequestConvertible {
     
-    case getTopGames()
+    case getProducts([String: Any])
     
     func asURLRequest() throws -> URLRequest {
         
         var method: HTTPMethod {
             switch self {
-            case .getTopGames():
+            case .getProducts(_):
                 return .get
             }
         }
         
+        var dictionary: [String: Any]!
         let url:URL = {
             let relativePath: String?
             
             switch self {
-            case .getTopGames():
-                relativePath = TGUrlHelper.base_Url + "games/top"
+            case .getProducts(let parameters):
+                dictionary = parameters
+                relativePath = "products(type=Game)"
             }
             
             var urlString = TGUrlHelper.base_Url
@@ -36,12 +38,19 @@ enum RequestBuilder: URLRequestConvertible {
             }
             return URL(string: urlString)!
         }()
-        
-        var urlRequest = URLRequest(url: url)
+        var components = URLComponents(string: url.absoluteString)!
+        components.queryItems = dictionary.map { (arg) -> URLQueryItem in
+            let (key, value) = arg
+            return URLQueryItem(name: key, value: value as? String)
+        }
+        components.percentEncodedQuery = components.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")
+        var urlRequest = URLRequest(url: components.url!)
         urlRequest.httpMethod = method.rawValue
         
+      
         let encoding = JSONEncoding.default
         return try encoding.encode(urlRequest)
+        
     }
     
 }

@@ -9,10 +9,10 @@
 import UIKit
 
 class HomeService {
-    func getTopGames(result: @escaping ((TopGames) -> Void),
+    func getProducts(parameters: [String: Any], result: @escaping ((ProductList) -> Void),
                 failure: @escaping (errorHandler) = { _ in }) {
-        ApiManager.getTopGames(success: { topGames in
-            result(topGames)
+        ApiManager.getProducts(parameters: parameters, success: { productList in
+            result(productList)
         }) { error in
             failure(error)
         }

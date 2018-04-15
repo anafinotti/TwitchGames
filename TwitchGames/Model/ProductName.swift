@@ -1,17 +1,17 @@
 //
-//  Image.swift
+//  ProductName.swift
 //  TwitchGames
 //
-//  Created by Ana Finotti on 4/9/18.
+//  Created by Ana Finotti on 4/15/18.
 //  Copyright © 2018 Finotti. All rights reserved.
 //
 
 import UIKit
 import ObjectMapper
 
-class Image: NSObject, NSCoding, Mappable {
+class ProductName: NSObject, NSCoding, Mappable {
     
-    var standard: String?
+    var title: String?
     
     override init() { }
     
@@ -22,17 +22,17 @@ class Image: NSObject, NSCoding, Mappable {
     
     // Mappable
     func mapping(map: Map) {
-        standard      <- map["standard"]
+        title      <- map["title"]
     }
     
     //MARK: Coding
     required init?(coder aDecoder: NSCoder) {
         super.init()
-        self.standard = aDecoder.decodeObject(forKey: "standard") as? String
+        self.title = aDecoder.decodeObject(forKey: "title") as? String
         
     }
     
     func encode(with aCoder: NSCoder) {
-        if let standard = standard { aCoder.encode(standard, forKey: "standard")}
+        if let title = title { aCoder.encode(title, forKey: "title")}
     }
 }

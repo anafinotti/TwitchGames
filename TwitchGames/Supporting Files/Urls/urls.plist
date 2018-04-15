@@ -3,6 +3,6 @@
 <plist version="1.0">
 <dict>
 	<key>Base_Url</key>
-	<string>https://api.twitch.tv/kraken/</string>
+	<string>https://api.bestbuy.com/v1/</string>
 </dict>
 </plist>

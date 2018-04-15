@@ -11,38 +11,75 @@ import UIKit
 class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     @IBOutlet var collectionView: UICollectionView!
 
+
+    private var productCell = "ProductCell"
     let homePresenter = HomePresenter(homeService: HomeService())
-    fileprivate var topGames = TopGames()
+    fileprivate var productList = ProductList()
+    var isSearching = false
+    
+    private var refreshControl: UIRefreshControl?
+    private var page = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let searchController = UISearchController(searchResultsController: nil)
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
-        
-        homePresenter.attachView(view: self)
-    }
 
+        setupCollectionView()
+        homePresenter.getProducts(page: page)
+    }
+    
+    //MARK: Setup CollectionView
+    func setupCollectionView() {
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        collectionView.refreshControl = refreshControl
+        collectionView.register(UINib(nibName: productCell, bundle: nil), forCellWithReuseIdentifier: productCell)
+        collectionView.isPagingEnabled = true
+        homePresenter.attachView(view: self)
+        isSearching = true
+    }
+    
+    @objc func refreshData() {
+        productList = ProductList()
+        page = 1
+        homePresenter.getProducts(page: page)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
     //MARK: CollectionView Delegate/Datasource
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        if isSearching {
+            return 0
+        } else {
+            return (productList.products?.count)!
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: GameCell.cellReuseIdentifier(), for: indexPath) as! GameCell
-
+        let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: ProductCell.cellReuseIdentifier(), for: indexPath) as! ProductCell
+        if let product = productList.products?[indexPath.row] {
+            cell.setupProductCell(product: product)
+        }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        willDisplay cell: UICollectionViewCell,
+                        forItemAt indexPath: IndexPath) {
+        if let products = productList.products {
+            if indexPath.row + 1 == products.count {
+                page += 1
+                homePresenter.getProducts(page: page)
+            }
+        }
     }
 }
 
@@ -54,14 +91,22 @@ extension HomeViewController: HomeView {
     
     func finishLoading() {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        //refreshControl?.endRefreshing()
     }
     
-    func setTopGames(topGames: TopGames) {
-        self.topGames = topGames
+    func setProducts(productList: ProductList) {
+        refreshControl?.endRefreshing()
+        if self.productList.products == nil {
+            self.productList = productList
+        } else {
+            self.productList.products = self.productList.products! + productList.products!
+        }
         
-        dismissSearchControllerIfExists()
-        //self.tableView.reloadData()
+        if self.productList.products == nil {
+            showAlert(name: "Nenhum produto encontrado")
+        } else {
+            dismissSearchControllerIfExists()
+            collectionView.reloadData()
+        }
     }
 
     func showAlert(name: String) {
@@ -72,12 +117,8 @@ extension HomeViewController: HomeView {
     }
     
     func dismissSearchControllerIfExists() {
-//        if isSearching {
-//            isSearching = false
-//            self.searchController.searchBar.resignFirstResponder()
-//            searchController.dismiss(animated: true, completion: nil)
-//            self.searchController.searchBar.text = ""
-//            self.tableView.reloadData()
-//        }
+        if isSearching {
+            isSearching = false
+        }
     }
 }

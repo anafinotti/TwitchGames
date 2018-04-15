@@ -10,29 +10,30 @@ import UIKit
 import Alamofire
 import AlamofireObjectMapper
 
-typealias errorHandler = (_ error: TopGamesError) -> ()
+typealias errorHandler = (_ error: ProductError) -> ()
 
 class ApiManager {
     
-    class func getTopGames(success: @escaping ((_ result: TopGames) -> ()),
+    class func getProducts(parameters: [String: Any], success: @escaping ((_ result: ProductList) -> ()),
                             failure: @escaping (errorHandler) = { _ in }) {
-        Alamofire.request(RequestBuilder.getTopGames()).responseObject { (response: DataResponse<TopGames>) in
-            
+
+        Alamofire.request(RequestBuilder.getProducts(parameters)).responseObject { (response: DataResponse<ProductList>) in
+
             if let error = response.error {
-                failure(TopGamesError(name: error.localizedDescription, id: error._code))
+                failure(ProductError(name: error.localizedDescription, id: error._code))
                 return
             }
-            
-            guard let topGames = response.result.value else {
+
+            guard let productList = response.result.value else {
                 return
             }
-            
-            guard (topGames.top?.count)! > 0 else {
-                failure(TopGamesError(name: "No data", id: 101))
+
+            guard productList.products != nil else {
+                failure(ProductError(name: "Nenhum producto encontrado", id: 101))
                 return
             }
-        
-            success(topGames)
+
+            success(productList)
         }
     }
     
