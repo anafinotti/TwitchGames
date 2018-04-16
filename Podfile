@@ -9,6 +9,7 @@ target 'TwitchGames' do
     pod 'Alamofire'
     pod 'ObjectMapper'
     pod 'AlamofireObjectMapper'
+    pod 'CoreDataManager'
     
 target 'TwitchGamesTests' do
     inherit! :search_paths

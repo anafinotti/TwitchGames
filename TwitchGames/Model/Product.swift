@@ -7,19 +7,24 @@
 //
 
 import UIKit
+import CoreData
+import CoreDataManager
 
 import ObjectMapper
 
-class Product: NSObject, NSCoding, Mappable {
-    
-    var sku: Int?
-    var name: String?
-    var image: String?
-    
-    override init() { }
-    
+class Product: NSManagedObject, NSCoding, Mappable {
+    @NSManaged var sku: NSNumber?
+    @NSManaged var name: String?
+    @NSManaged var image: String?
+    @NSManaged var isFavorite: NSNumber!
+
+    override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
+    }
     required init?(map: Map) {
-        super.init()
+        let context = CoreDataManager.sharedInstance.mainContext
+        let entity = NSEntityDescription.entity(forEntityName: "Product", in: context)
+        super.init(entity: entity!, insertInto: context)
         mapping(map: map)
     }
     
@@ -28,19 +33,24 @@ class Product: NSObject, NSCoding, Mappable {
         sku         <- map["sku"]
         name        <- map["name"]
         image       <- map["image"]
+        isFavorite  = false
     }
     
     //MARK: Coding
     required init?(coder aDecoder: NSCoder) {
-        super.init()
-        self.sku = aDecoder.decodeObject(forKey: "sku") as? Int
+        let context = CoreDataManager.sharedInstance.mainContext
+        let entity = NSEntityDescription.entity(forEntityName: "Product", in: context)
+        super.init(entity: entity!, insertInto: context)
+        self.sku = aDecoder.decodeObject(forKey: "sku") as? NSNumber
         self.name = aDecoder.decodeObject(forKey: "name") as? String
         self.image = aDecoder.decodeObject(forKey: "image") as? String
+        self.isFavorite = aDecoder.decodeObject(forKey: "isFavorite") as? NSNumber
     }
     
     func encode(with aCoder: NSCoder) {
         if let sku = sku { aCoder.encode(sku, forKey: "sku")}
         if let name = name { aCoder.encode(name, forKey: "name")}
         if let image = image { aCoder.encode(image, forKey: "image")}
+        if let isFavorite = isFavorite { aCoder.encode(isFavorite, forKey: "isFavorite")}
     }
 }

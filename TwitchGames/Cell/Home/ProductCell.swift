@@ -18,12 +18,21 @@ class ProductCell: UICollectionViewCell {
         super.awakeFromNib()
     }
     
-    func setupProductCell(product: Product) {
+    override func prepareForReuse() {
+        favoriteImageView.image = nil
+    }
+    
+    func setupProductCell(product: Product, isFavorite: Bool) {
         productNameLabel.text = product.name
         if let image = product.image {
             productImageView.downloadedFrom(link: image, contentMode: .scaleAspectFit)
         } else {
             productImageView.image = UIImage(named: "default-placeholder")
+        }
+        if isFavorite {
+            favoriteImageView.image = UIImage(named: "favorite_enabled")
+        } else {
+            favoriteImageView.image = UIImage(named: "favorite_disabled")
         }
     }
 }

@@ -30,7 +30,7 @@
                                     <constraint firstAttribute="width" constant="130" id="oux-Ov-gGG"/>
                                 </constraints>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="favorite_disabled" translatesAutoresizingMaskIntoConstraints="NO" id="hGF-lb-SAs">
+                            <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hGF-lb-SAs">
                                 <rect key="frame" x="172" y="8" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="GNw-xe-RKH"/>
@@ -92,7 +92,4 @@
             <point key="canvasLocation" x="-62" y="95.5"/>
         </collectionViewCell>
     </objects>
-    <resources>
-        <image name="favorite_disabled" width="64" height="64"/>
-    </resources>
 </document>

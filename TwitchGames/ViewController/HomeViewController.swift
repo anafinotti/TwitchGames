@@ -7,10 +7,14 @@
 //
 
 import UIKit
+import CoreData
+import CoreDataManager
 
-class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, NSFetchedResultsControllerDelegate {
+    
     @IBOutlet var collectionView: UICollectionView!
 
+    private let cdm = CoreDataManager.sharedInstance
 
     private var productCell = "ProductCell"
     let homePresenter = HomePresenter(homeService: HomeService())
@@ -19,6 +23,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     private var refreshControl: UIRefreshControl?
     private var page = 1
+    private var favoriteTag: Int?
+    private var favoriteProducts = [Product]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +34,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
 
         setupCollectionView()
         homePresenter.getProducts(page: page)
+        getFavoriteProducts()
     }
     
     //MARK: Setup CollectionView
@@ -41,17 +48,52 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         isSearching = true
     }
     
+    //MARK: Core Data
+    @objc func saveFavoriteToCoreData(sender: UITapGestureRecognizer) {
+        if let favoriteImageView = sender.view as? UIImageView {
+            favoriteTag = favoriteImageView.tag
+            if let products = productList.products {
+                let product = products[favoriteTag!]
+                product.isFavorite = product.isFavorite == 1 ? 0 : 1
+                self.collectionView.reloadItems(at: [IndexPath(item: favoriteTag!, section: 0)])
+                let context = self.cdm.backgroundContext
+                context.perform {
+                    let context = self.cdm.backgroundContext
+                    if let p = context.managerFor(Product.self).filter(format: "sku = %@", product.sku!).first {
+                        p.delete()
+                    }
+                    let newProduct = NSEntityDescription.insertNewObject(forEntityName: "Product", into: context) as! Product
+                    newProduct.name = product.name
+                    newProduct.sku = product.sku
+                    newProduct.image = product.image
+                    newProduct.isFavorite = product.isFavorite
+                    try! context.saveIfChanged()
+                    self.showAlert(name: newProduct.isFavorite.boolValue ? "Produto favoritado" : "Produto desfavoritado")
+                
+                }
+            }
+        }
+    }
+    
+    func getFavoriteProducts() {
+        let context = self.cdm.mainContext
+
+        let favoriteProducts = context.managerFor(Product.self).array
+        self.favoriteProducts = favoriteProducts
+    }
+    
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
+    //MARK: CollectionView Delegate/Datasource
     @objc func refreshData() {
         productList = ProductList()
         page = 1
         homePresenter.getProducts(page: page)
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
-    //MARK: CollectionView Delegate/Datasource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if isSearching {
             return 0
@@ -63,12 +105,21 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: ProductCell.cellReuseIdentifier(), for: indexPath) as! ProductCell
         if let product = productList.products?[indexPath.row] {
-            cell.setupProductCell(product: product)
+            cell.favoriteImageView.tag = indexPath.row
+            cell.favoriteImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(saveFavoriteToCoreData(sender:))))
+            cell.setupProductCell(product: product, isFavorite: product.isFavorite!.boolValue)
+//            if favoriteProducts.count > 0 {
+//                if let favoriteProduct = favoriteProducts.filter({ $0.sku == product.sku }).first {
+//                    cell.setupProductCell(product: product, isFavorite: favoriteProduct.isFavorite!.boolValue)
+//                }
+//            }
         }
+
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -104,6 +155,7 @@ extension HomeViewController: HomeView {
         if self.productList.products == nil {
             showAlert(name: "Nenhum produto encontrado")
         } else {
+            
             dismissSearchControllerIfExists()
             collectionView.reloadData()
         }
@@ -118,6 +170,12 @@ extension HomeViewController: HomeView {
     
     func dismissSearchControllerIfExists() {
         if isSearching {
+
+            favoriteProducts.forEach { (product) in
+                if let favorite = productList.products?.filter({ $0.sku == product.sku }).first {
+                    favorite.isFavorite = product.isFavorite
+                }
+            }
             isSearching = false
         }
     }
