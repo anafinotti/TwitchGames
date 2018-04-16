@@ -61,8 +61,8 @@
                                 <collectionViewLayout key="collectionViewLayout" id="vzG-9m-lGG" customClass="CustomImageFlowLayout" customModule="TwitchGames" customModuleProvider="target"/>
                                 <cells/>
                                 <connections>
-                                    <outlet property="dataSource" destination="2CV-Wy-UfN" id="rWH-5V-mje"/>
-                                    <outlet property="delegate" destination="2CV-Wy-UfN" id="6RM-36-bIc"/>
+                                    <outlet property="dataSource" destination="PUa-cF-Rao" id="RbQ-iy-zT3"/>
+                                    <outlet property="delegate" destination="PUa-cF-Rao" id="B6a-p2-X3V"/>
                                 </connections>
                             </collectionView>
                         </subviews>
@@ -76,6 +76,9 @@
                         <viewLayoutGuide key="safeArea" id="des-Pt-OaH"/>
                     </view>
                     <navigationItem key="navigationItem" id="qNj-uc-tV7"/>
+                    <connections>
+                        <outlet property="collectionView" destination="Lab-YN-ilC" id="nP7-lS-cXb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jan-DQ-DRO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -108,7 +111,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="HdV-GT-kmE">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="HdV-GT-kmE">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="scrollIndicatorInsets" minX="0.0" minY="-20" maxX="0.0" maxY="0.0"/>

@@ -38,8 +38,13 @@ class HomePresenter {
     
     //MARK: Core Data
     func getFavorites() {
-        let context = cdm.mainContext
-        favorites = context.managerFor(Product.self).array
+        var context: NSManagedObjectContext?
+        if cdm.mainContext.hasChanges {
+            context = cdm.backgroundContext
+        } else {
+            context = cdm.mainContext
+        }
+        favorites = (context?.managerFor(Product.self).array)!
     }
     
     func setFavoritesToCoreData(product: Product) {
@@ -48,18 +53,18 @@ class HomePresenter {
             let context = self.cdm.backgroundContext
             if let p = context.managerFor(Product.self).filter(format: "sku = %@", product.sku!).first {
                 p.delete()
+                self.homeView?.showAlert(name: "Produto desfavoritado")
+            } else {
+                let newProduct = NSEntityDescription.insertNewObject(forEntityName: "Product", into: context) as! Product
+                newProduct.name = product.name
+                newProduct.sku = product.sku
+                newProduct.image = product.image
+                newProduct.isFavorite = product.isFavorite
+                self.homeView?.showAlert(name: "Produto favoritado")
             }
-            let newProduct = NSEntityDescription.insertNewObject(forEntityName: "Product", into: context) as! Product
-            newProduct.name = product.name
-            newProduct.sku = product.sku
-            newProduct.image = product.image
-            newProduct.isFavorite = product.isFavorite
-            try! context.saveIfChanged()
-            self.homeView?.showAlert(name: newProduct.isFavorite.boolValue ? "Produto favoritado" : "Produto desfavoritado")
-            
+            try! context.save()
         }
     }
-    
     // MARK: Service
     func getProducts(page: Int) {
         self.homeView?.startLoading()

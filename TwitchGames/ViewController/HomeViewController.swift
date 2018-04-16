@@ -35,6 +35,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         navigationItem.hidesSearchBarWhenScrolling = false
         
         setupCollectionView()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         homePresenter.getProducts(page: page)
         homePresenter.getFavorites()
     }
@@ -71,6 +74,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     @objc func refreshData() {
         productList = ProductList()
         page = 1
+        isSearching = true
         homePresenter.getProducts(page: page)
     }
     
@@ -152,6 +156,9 @@ extension HomeViewController: HomeView {
     }
     
     func setFavorites(favorites: [Product]) {
+        productList.products?.forEach({ (filter) in
+            filter.isFavorite = 0
+        })
         if favorites.count > 0 {
             favorites.forEach { (favorite) in
                 if let product = productList.products?.filter({ $0.sku == favorite.sku }).first {

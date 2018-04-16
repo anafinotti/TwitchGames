@@ -20,11 +20,9 @@
 		B024B0C1207C49B600BC9841 /* ProductError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B024B0C0207C49B600BC9841 /* ProductError.swift */; };
 		B024B0C4207C4BFF00BC9841 /* HomeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B024B0C3207C4BFF00BC9841 /* HomeService.swift */; };
 		B026F8BC2083EC4400689E31 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = B026F8BB2083EC4400689E31 /* Product.swift */; };
-		B026F8BE2083F20600689E31 /* ProductName.swift in Sources */ = {isa = PBXBuildFile; fileRef = B026F8BD2083F20600689E31 /* ProductName.swift */; };
-		B026F8C02083F23B00689E31 /* ProductPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B026F8BF2083F23B00689E31 /* ProductPrice.swift */; };
 		B026F8C22083F35600689E31 /* ProductList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B026F8C12083F35600689E31 /* ProductList.swift */; };
-		B050995120842D500055F3C9 /* CoreDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B050995020842D500055F3C9 /* CoreDataHandler.swift */; };
-		B050995F208509160055F3C9 /* FavoriteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B050995E208509160055F3C9 /* FavoriteService.swift */; };
+		B0509961208511FA0055F3C9 /* FavoritePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0509960208511FA0055F3C9 /* FavoritePresenter.swift */; };
+		B05099652085247C0055F3C9 /* FavoriteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05099642085247B0055F3C9 /* FavoriteService.swift */; };
 		B097146620784D4D00517043 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B097146520784D4D00517043 /* AppDelegate.swift */; };
 		B097146B20784D4D00517043 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B097146920784D4D00517043 /* Main.storyboard */; };
 		B097146E20784D4D00517043 /* TwitchGames.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B097146C20784D4D00517043 /* TwitchGames.xcdatamodeld */; };
@@ -75,11 +73,9 @@
 		B024B0C0207C49B600BC9841 /* ProductError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductError.swift; sourceTree = "<group>"; };
 		B024B0C3207C4BFF00BC9841 /* HomeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeService.swift; sourceTree = "<group>"; };
 		B026F8BB2083EC4400689E31 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
-		B026F8BD2083F20600689E31 /* ProductName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductName.swift; sourceTree = "<group>"; };
-		B026F8BF2083F23B00689E31 /* ProductPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductPrice.swift; sourceTree = "<group>"; };
 		B026F8C12083F35600689E31 /* ProductList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductList.swift; sourceTree = "<group>"; };
-		B050995020842D500055F3C9 /* CoreDataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHandler.swift; sourceTree = "<group>"; };
-		B050995E208509160055F3C9 /* FavoriteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteService.swift; sourceTree = "<group>"; };
+		B0509960208511FA0055F3C9 /* FavoritePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePresenter.swift; sourceTree = "<group>"; };
+		B05099642085247B0055F3C9 /* FavoriteService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteService.swift; sourceTree = "<group>"; };
 		B097146220784D4D00517043 /* TwitchGames.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitchGames.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B097146520784D4D00517043 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B097146A20784D4D00517043 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -164,7 +160,6 @@
 			children = (
 				B024B0BA207C36D600BC9841 /* TGUrlHelper.swift */,
 				B01D61C42080581300EE0B41 /* CustomFlowLayout.swift */,
-				B050995020842D500055F3C9 /* CoreDataHandler.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -177,10 +172,10 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
-		B050995D208509080055F3C9 /* Favorite */ = {
+		B05099622085244E0055F3C9 /* Favorite */ = {
 			isa = PBXGroup;
 			children = (
-				B050995E208509160055F3C9 /* FavoriteService.swift */,
+				B05099642085247B0055F3C9 /* FavoriteService.swift */,
 			);
 			path = Favorite;
 			sourceTree = "<group>";
@@ -260,8 +255,6 @@
 			isa = PBXGroup;
 			children = (
 				B026F8BB2083EC4400689E31 /* Product.swift */,
-				B026F8BD2083F20600689E31 /* ProductName.swift */,
-				B026F8BF2083F23B00689E31 /* ProductPrice.swift */,
 				B026F8C12083F35600689E31 /* ProductList.swift */,
 			);
 			path = Model;
@@ -271,6 +264,7 @@
 			isa = PBXGroup;
 			children = (
 				B09714A020786AF000517043 /* HomePresenter.swift */,
+				B0509960208511FA0055F3C9 /* FavoritePresenter.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -278,7 +272,7 @@
 		B09714A220786B1700517043 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				B050995D208509080055F3C9 /* Favorite */,
+				B05099622085244E0055F3C9 /* Favorite */,
 				B024B0C2207C4BF100BC9841 /* Home */,
 				B024B0B3207C356D00BC9841 /* ApiManager.swift */,
 				B024B0BE207C490900BC9841 /* RequestBuilder.swift */,
@@ -549,24 +543,22 @@
 			files = (
 				B097146E20784D4D00517043 /* TwitchGames.xcdatamodeld in Sources */,
 				B024B0B4207C356D00BC9841 /* ApiManager.swift in Sources */,
+				B0509961208511FA0055F3C9 /* FavoritePresenter.swift in Sources */,
 				B099E361207C50330045C2CA /* UICollectionViewCell+Extension.swift in Sources */,
-				B050995F208509160055F3C9 /* FavoriteService.swift in Sources */,
 				B097146620784D4D00517043 /* AppDelegate.swift in Sources */,
 				B097149F20786A8C00517043 /* DetailViewController.swift in Sources */,
 				B024B0BF207C490900BC9841 /* RequestBuilder.swift in Sources */,
 				B024B0BB207C36D600BC9841 /* TGUrlHelper.swift in Sources */,
-				B050995120842D500055F3C9 /* CoreDataHandler.swift in Sources */,
 				B026F8C22083F35600689E31 /* ProductList.swift in Sources */,
+				B05099652085247C0055F3C9 /* FavoriteService.swift in Sources */,
 				B09714A120786AF000517043 /* HomePresenter.swift in Sources */,
 				B024B0C4207C4BFF00BC9841 /* HomeService.swift in Sources */,
 				B097149D20786A8100517043 /* FavoriteViewController.swift in Sources */,
-				B026F8C02083F23B00689E31 /* ProductPrice.swift in Sources */,
 				B01D61C32080390500EE0B41 /* UIImageView+Extension.swift in Sources */,
 				B099E366207C51520045C2CA /* ProductCell.swift in Sources */,
 				B097149B20786A5700517043 /* HomeViewController.swift in Sources */,
 				B01D61C52080581300EE0B41 /* CustomFlowLayout.swift in Sources */,
 				B024B0C1207C49B600BC9841 /* ProductError.swift in Sources */,
-				B026F8BE2083F20600689E31 /* ProductName.swift in Sources */,
 				B01D61C72080597C00EE0B41 /* UIView+Extension.swift in Sources */,
 				B026F8BC2083EC4400689E31 /* Product.swift in Sources */,
 			);

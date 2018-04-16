@@ -17,12 +17,4 @@ class HomeService {
             failure(error)
         }
     }
-    func getFavorites(parameters: [String: Any], result: @escaping ((ProductList) -> Void),
-                     failure: @escaping (errorHandler) = { _ in }) {
-        ApiManager.getProducts(parameters: parameters, success: { productList in
-            result(productList)
-        }) { error in
-            failure(error)
-        }
-    }
 }
