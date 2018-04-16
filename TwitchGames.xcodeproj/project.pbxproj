@@ -24,6 +24,7 @@
 		B026F8C02083F23B00689E31 /* ProductPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B026F8BF2083F23B00689E31 /* ProductPrice.swift */; };
 		B026F8C22083F35600689E31 /* ProductList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B026F8C12083F35600689E31 /* ProductList.swift */; };
 		B050995120842D500055F3C9 /* CoreDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B050995020842D500055F3C9 /* CoreDataHandler.swift */; };
+		B050995F208509160055F3C9 /* FavoriteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B050995E208509160055F3C9 /* FavoriteService.swift */; };
 		B097146620784D4D00517043 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B097146520784D4D00517043 /* AppDelegate.swift */; };
 		B097146B20784D4D00517043 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B097146920784D4D00517043 /* Main.storyboard */; };
 		B097146E20784D4D00517043 /* TwitchGames.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B097146C20784D4D00517043 /* TwitchGames.xcdatamodeld */; };
@@ -78,6 +79,7 @@
 		B026F8BF2083F23B00689E31 /* ProductPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductPrice.swift; sourceTree = "<group>"; };
 		B026F8C12083F35600689E31 /* ProductList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductList.swift; sourceTree = "<group>"; };
 		B050995020842D500055F3C9 /* CoreDataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHandler.swift; sourceTree = "<group>"; };
+		B050995E208509160055F3C9 /* FavoriteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteService.swift; sourceTree = "<group>"; };
 		B097146220784D4D00517043 /* TwitchGames.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitchGames.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B097146520784D4D00517043 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B097146A20784D4D00517043 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -175,6 +177,14 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
+		B050995D208509080055F3C9 /* Favorite */ = {
+			isa = PBXGroup;
+			children = (
+				B050995E208509160055F3C9 /* FavoriteService.swift */,
+			);
+			path = Favorite;
+			sourceTree = "<group>";
+		};
 		B097145920784D4D00517043 = {
 			isa = PBXGroup;
 			children = (
@@ -268,6 +278,7 @@
 		B09714A220786B1700517043 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				B050995D208509080055F3C9 /* Favorite */,
 				B024B0C2207C4BF100BC9841 /* Home */,
 				B024B0B3207C356D00BC9841 /* ApiManager.swift */,
 				B024B0BE207C490900BC9841 /* RequestBuilder.swift */,
@@ -539,6 +550,7 @@
 				B097146E20784D4D00517043 /* TwitchGames.xcdatamodeld in Sources */,
 				B024B0B4207C356D00BC9841 /* ApiManager.swift in Sources */,
 				B099E361207C50330045C2CA /* UICollectionViewCell+Extension.swift in Sources */,
+				B050995F208509160055F3C9 /* FavoriteService.swift in Sources */,
 				B097146620784D4D00517043 /* AppDelegate.swift in Sources */,
 				B097149F20786A8C00517043 /* DetailViewController.swift in Sources */,
 				B024B0BF207C490900BC9841 /* RequestBuilder.swift in Sources */,
@@ -733,7 +745,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VZB2Z99GV8;
 				INFOPLIST_FILE = TwitchGames/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.finotti.TwitchGames;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -749,7 +764,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VZB2Z99GV8;
 				INFOPLIST_FILE = TwitchGames/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.finotti.TwitchGames;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -766,7 +784,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VZB2Z99GV8;
 				INFOPLIST_FILE = TwitchGamesTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.finotti.TwitchGamesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -784,7 +806,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VZB2Z99GV8;
 				INFOPLIST_FILE = TwitchGamesTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.finotti.TwitchGamesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -801,7 +827,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VZB2Z99GV8;
 				INFOPLIST_FILE = TwitchGamesUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.finotti.TwitchGamesUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -818,7 +848,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VZB2Z99GV8;
 				INFOPLIST_FILE = TwitchGamesUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.finotti.TwitchGamesUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;

@@ -53,7 +53,26 @@
                     <view key="view" contentMode="scaleToFill" id="2zF-YK-AcT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Lab-YN-ilC">
+                                <rect key="frame" x="0.0" y="88" width="375" height="724"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="scrollIndicatorInsets" minX="0.0" minY="-20" maxX="0.0" maxY="0.0"/>
+                                <collectionViewLayout key="collectionViewLayout" id="vzG-9m-lGG" customClass="CustomImageFlowLayout" customModule="TwitchGames" customModuleProvider="target"/>
+                                <cells/>
+                                <connections>
+                                    <outlet property="dataSource" destination="2CV-Wy-UfN" id="rWH-5V-mje"/>
+                                    <outlet property="delegate" destination="2CV-Wy-UfN" id="6RM-36-bIc"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Lab-YN-ilC" firstAttribute="top" secondItem="des-Pt-OaH" secondAttribute="top" id="Q42-WF-jnL"/>
+                            <constraint firstItem="Lab-YN-ilC" firstAttribute="trailing" secondItem="des-Pt-OaH" secondAttribute="trailing" id="cxN-ff-WAK"/>
+                            <constraint firstItem="Lab-YN-ilC" firstAttribute="leading" secondItem="des-Pt-OaH" secondAttribute="leading" id="fpG-R3-EYT"/>
+                            <constraint firstAttribute="bottom" secondItem="Lab-YN-ilC" secondAttribute="bottom" id="jLx-Bi-PSF"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="des-Pt-OaH"/>
                     </view>
                     <navigationItem key="navigationItem" id="qNj-uc-tV7"/>

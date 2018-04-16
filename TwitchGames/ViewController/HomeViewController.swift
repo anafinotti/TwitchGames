@@ -10,12 +10,12 @@ import UIKit
 import CoreData
 import CoreDataManager
 
-class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, NSFetchedResultsControllerDelegate {
+class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UISearchBarDelegate, NSFetchedResultsControllerDelegate {
     
     @IBOutlet var collectionView: UICollectionView!
-
+    
     private let cdm = CoreDataManager.sharedInstance
-
+    
     private var productCell = "ProductCell"
     let homePresenter = HomePresenter(homeService: HomeService())
     fileprivate var productList = ProductList()
@@ -23,18 +23,20 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     private var refreshControl: UIRefreshControl?
     private var page = 1
-    private var favoriteTag: Int?
-    private var favoriteProducts = [Product]()
+    private var favorites = [Product]()
+    private var searchActive = false
+    private var filteredArray = [Product]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchBar.delegate = self
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
-
+        
         setupCollectionView()
         homePresenter.getProducts(page: page)
-        getFavoriteProducts()
+        homePresenter.getFavorites()
     }
     
     //MARK: Setup CollectionView
@@ -50,39 +52,17 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     //MARK: Core Data
     @objc func saveFavoriteToCoreData(sender: UITapGestureRecognizer) {
-        if let favoriteImageView = sender.view as? UIImageView {
-            favoriteTag = favoriteImageView.tag
+        if let view = sender.view {
+            let tag = view.tag
             if let products = productList.products {
-                let product = products[favoriteTag!]
+                let product = products[tag]
                 product.isFavorite = product.isFavorite == 1 ? 0 : 1
-                self.collectionView.reloadItems(at: [IndexPath(item: favoriteTag!, section: 0)])
-                let context = self.cdm.backgroundContext
-                context.perform {
-                    let context = self.cdm.backgroundContext
-                    if let p = context.managerFor(Product.self).filter(format: "sku = %@", product.sku!).first {
-                        p.delete()
-                    }
-                    let newProduct = NSEntityDescription.insertNewObject(forEntityName: "Product", into: context) as! Product
-                    newProduct.name = product.name
-                    newProduct.sku = product.sku
-                    newProduct.image = product.image
-                    newProduct.isFavorite = product.isFavorite
-                    try! context.saveIfChanged()
-                    self.showAlert(name: newProduct.isFavorite.boolValue ? "Produto favoritado" : "Produto desfavoritado")
-                
-                }
+                collectionView.reloadItems(at: [IndexPath(item: tag, section: 0)])
+                homePresenter.setFavoritesToCoreData(product: product)
             }
         }
     }
     
-    func getFavoriteProducts() {
-        let context = self.cdm.mainContext
-
-        let favoriteProducts = context.managerFor(Product.self).array
-        self.favoriteProducts = favoriteProducts
-    }
-    
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -97,24 +77,29 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if isSearching {
             return 0
-        } else {
-            return (productList.products?.count)!
+        } else if searchActive {
+            return filteredArray.count
         }
+        return (productList.products?.count)!
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: ProductCell.cellReuseIdentifier(), for: indexPath) as! ProductCell
-        if let product = productList.products?[indexPath.row] {
+        if searchActive {
+            let product = filteredArray[indexPath.row]
             cell.favoriteImageView.tag = indexPath.row
             cell.favoriteImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(saveFavoriteToCoreData(sender:))))
             cell.setupProductCell(product: product, isFavorite: product.isFavorite!.boolValue)
-//            if favoriteProducts.count > 0 {
-//                if let favoriteProduct = favoriteProducts.filter({ $0.sku == product.sku }).first {
-//                    cell.setupProductCell(product: product, isFavorite: favoriteProduct.isFavorite!.boolValue)
-//                }
-//            }
+          
+        } else {
+            if let product = productList.products?[indexPath.row] {
+                cell.favoriteImageView.tag = indexPath.row
+                cell.favoriteImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(saveFavoriteToCoreData(sender:))))
+                cell.setupProductCell(product: product, isFavorite: product.isFavorite!.boolValue)
+            }
         }
-
+        
         return cell
     }
     
@@ -128,8 +113,30 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         if let products = productList.products {
             if indexPath.row + 1 == products.count {
                 page += 1
+                isSearching = true
                 homePresenter.getProducts(page: page)
             }
+        }
+    }
+    //MARK: - SEARCH
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if(!(searchBar.text?.isEmpty)!){
+            self.collectionView?.reloadData()
+        }
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searchActive = false
+        collectionView.reloadData()
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        searchActive = true
+        if(!searchText.isEmpty){
+            if let products = productList.products {
+                filteredArray = products.filter({ ($0.name?.contains(searchText))! })
+            }
+            self.collectionView?.reloadData()
         }
     }
 }
@@ -144,6 +151,16 @@ extension HomeViewController: HomeView {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
     
+    func setFavorites(favorites: [Product]) {
+        if favorites.count > 0 {
+            favorites.forEach { (favorite) in
+                if let product = productList.products?.filter({ $0.sku == favorite.sku }).first {
+                    product.isFavorite = favorite.isFavorite
+                }
+            }
+        }
+    }
+    
     func setProducts(productList: ProductList) {
         refreshControl?.endRefreshing()
         if self.productList.products == nil {
@@ -155,12 +172,11 @@ extension HomeViewController: HomeView {
         if self.productList.products == nil {
             showAlert(name: "Nenhum produto encontrado")
         } else {
-            
             dismissSearchControllerIfExists()
             collectionView.reloadData()
         }
     }
-
+    
     func showAlert(name: String) {
         let controller = UIAlertController(title: name, message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "Done", style: .default, handler: nil)
@@ -170,12 +186,6 @@ extension HomeViewController: HomeView {
     
     func dismissSearchControllerIfExists() {
         if isSearching {
-
-            favoriteProducts.forEach { (product) in
-                if let favorite = productList.products?.filter({ $0.sku == product.sku }).first {
-                    favorite.isFavorite = product.isFavorite
-                }
-            }
             isSearching = false
         }
     }
