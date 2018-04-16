@@ -102,7 +102,10 @@ class FavoriteViewController: UIViewController, UICollectionViewDelegate, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        let favorite = favorites[indexPath.row]
+        let detailViewController = self.storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as? DetailViewController
+        detailViewController?.product = favorite
+        navigationController?.pushViewController(detailViewController!, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -148,17 +151,15 @@ extension FavoriteViewController: FavoriteView {
     }
     
     func setFavorites(favorites: [Product]) {
-        if favorites.count > 0 {
-            refreshControl?.endRefreshing()
-            isSearching = false
-            self.favorites = favorites
-            if self.favorites.count == 0 {
-                showAlert(name: "Nenhum favorito encontrado")
-            } else {
-                dismissSearchControllerIfExists()
-                collectionView.reloadData()
-            }
+        refreshControl?.endRefreshing()
+        isSearching = false
+        self.favorites = favorites
+        if self.favorites.count == 0 {
+            showAlert(name: "Nenhum favorito encontrado")
+        } else {
+            dismissSearchControllerIfExists()
         }
+        collectionView.reloadData()
     }
     
     func showAlert(name: String) {

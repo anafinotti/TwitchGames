@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import CoreDataManager
 
-class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UISearchBarDelegate, NSFetchedResultsControllerDelegate {
+class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UISearchControllerDelegate, UISearchBarDelegate, NSFetchedResultsControllerDelegate {
     
     @IBOutlet var collectionView: UICollectionView!
     
@@ -20,7 +20,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     let homePresenter = HomePresenter(homeService: HomeService())
     fileprivate var productList = ProductList()
     var isSearching = false
-    
+    var searchController: UISearchController?
     private var refreshControl: UIRefreshControl?
     private var page = 1
     private var favorites = [Product]()
@@ -29,11 +29,14 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let searchController = UISearchController(searchResultsController: nil)
-        searchController.searchBar.delegate = self
+        searchController = UISearchController(searchResultsController: nil)
+        searchController?.delegate = self
+        searchController?.searchBar.delegate = self
+        searchController?.searchBar.showsCancelButton = true
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
-        
+        self.definesPresentationContext = true
+        searchController?.searchBar.becomeFirstResponder()
         setupCollectionView()
     }
     
@@ -108,7 +111,15 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        var selectedProduct: Product?
+        if searchActive {
+            selectedProduct = filteredArray[indexPath.row]
+        } else {
+            selectedProduct = productList.products?[indexPath.row]
+        }
+        let detailViewController = self.storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as? DetailViewController
+        detailViewController?.product = selectedProduct
+        navigationController?.pushViewController(detailViewController!, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -129,10 +140,11 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
     
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchActive = false
         collectionView.reloadData()
     }
+    
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searchActive = true
@@ -142,6 +154,15 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             }
             self.collectionView?.reloadData()
         }
+    }
+    
+    func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
+        if !searchActive {
+            searchActive = true
+            collectionView.reloadData()
+        }
+        
+        searchController?.searchBar.resignFirstResponder()
     }
 }
 
