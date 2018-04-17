@@ -103,7 +103,7 @@
             </objects>
             <point key="canvasLocation" x="1265" y="-466"/>
         </scene>
-        <!--Produtos-->
+        <!--Home View Controller-->
         <scene sceneID="7u4-Ig-zX9">
             <objects>
                 <viewController id="2CV-Wy-UfN" customClass="HomeViewController" customModule="TwitchGames" customModuleProvider="target" sceneMemberID="viewController">
@@ -111,7 +111,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="HdV-GT-kmE">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="HdV-GT-kmE">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="scrollIndicatorInsets" minX="0.0" minY="-20" maxX="0.0" maxY="0.0"/>
@@ -132,7 +132,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="611-w8-Cae"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Produtos" id="V6A-Ml-yy8"/>
+                    <navigationItem key="navigationItem" id="V6A-Ml-yy8"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="collectionView" destination="HdV-GT-kmE" id="TXW-jE-LsX"/>

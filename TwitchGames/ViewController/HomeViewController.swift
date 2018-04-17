@@ -38,7 +38,11 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         navigationItem.hidesSearchBarWhenScrolling = false
         self.definesPresentationContext = true
         searchController?.searchBar.becomeFirstResponder()
-        
+        let imageView = UIImageView(image: UIImage(named: "icon_favorite_disabled"))
+        let dropInteraction = UIDropInteraction(delegate: self)
+        imageView.addInteraction(dropInteraction)
+        let barButton = UIBarButtonItem(customView: imageView)
+        navigationItem.rightBarButtonItem = barButton
         setupCollectionView()
     }
     
@@ -94,6 +98,12 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
     
+    func saveFavoriteFromDragAndDrop(product: Product) {
+        product.isFavorite = product.isFavorite == 1 ? 0 : 1
+        collectionView.reloadData()
+        homePresenter.setFavoritesToCoreData(product: product)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -111,8 +121,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             return 0
         } else if searchActive {
             return filteredArray.count
+        } else if productList.products != nil {
+            return (productList.products?.count)!
         }
-        return (productList.products?.count)!
+        return 0
         
     }
     
@@ -198,7 +210,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     
     func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
-        let ffi = session.items[0].localObject as! Product
+        let product = session.items[0].localObject as! Product
+        saveFavoriteFromDragAndDrop(product: product)
         // Necessary logic to parse the NSManagedObject
     }
     
@@ -274,7 +287,6 @@ extension HomeViewController: HomeView {
             showAlert(name: "Nenhum produto encontrado")
         } else {
             dismissSearchControllerIfExists()
-            collectionView.reloadData()
         }
     }
     
@@ -289,6 +301,7 @@ extension HomeViewController: HomeView {
         if isSearching {
             isSearching = false
         }
+        collectionView.reloadData()
     }
 }
 

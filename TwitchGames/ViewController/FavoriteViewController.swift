@@ -25,11 +25,12 @@ class FavoriteViewController: UIViewController, UICollectionViewDelegate, UIColl
     private var pageSize = 20
     private var searchActive = false
     private var filteredArray = [Product]()
-    
+    var searchController: UISearchController?
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        let searchController = UISearchController(searchResultsController: nil)
-        searchController.searchBar.delegate = self
+        searchController = UISearchController(searchResultsController: nil)
+        searchController?.searchBar.delegate = self
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
         favoritePresenter.attachView(view: self)
@@ -121,23 +122,32 @@ class FavoriteViewController: UIViewController, UICollectionViewDelegate, UIColl
     //MARK: - SEARCH
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if(!(searchBar.text?.isEmpty)!){
-            //   self.collectionView?.reloadData()
+            self.collectionView?.reloadData()
         }
     }
     
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        //        searchActive = false
-        //        collectionView.reloadData()
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchActive = false
+        collectionView.reloadData()
     }
     
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        //        searchActive = true
-        //        if(!searchText.isEmpty){
-        //            if let products = productList.products {
-        //                filteredArray = products.filter({ ($0.name?.contains(searchText))! })
-        //            }
-        //            self.collectionView?.reloadData()
-        //        }
+        searchActive = true
+        if(!searchText.isEmpty){
+            filteredArray = favorites.filter({ ($0.name?.contains(searchText))! })
+
+            self.collectionView?.reloadData()
+        }
+    }
+    
+    func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
+        if !searchActive {
+            searchActive = true
+            collectionView.reloadData()
+        }
+        
+        searchController?.searchBar.resignFirstResponder()
     }
 }
 
