@@ -33,6 +33,7 @@ class FavoriteViewController: UIViewController, UICollectionViewDelegate, UIColl
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
         favoritePresenter.attachView(view: self)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon_favorite_disabled"), style: .plain, target: self, action: nil)
 
         setupCollectionView()
  

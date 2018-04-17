@@ -78,10 +78,14 @@ class HomePresenter {
         homeService.getProducts(parameters: parameters, result: { [weak self] productList in
             guard let `self` = self else { return }
             self.homeView?.finishLoading()
-            
             guard productList.products != nil else {
                 self.homeView?.showAlert(name: "Nenhum produto encontrado")
                 return
+            }
+            if (productList.products?.count)! > 2 {
+                let productsArraySlice = productList.products?.prefix(3)
+                let filteredProducts: [Product] = Array(productsArraySlice!)
+                self.setProductsToUserDefaults(products: filteredProducts)
             }
             self.homeView?.setProducts(productList: productList)
             self.homeView?.setFavorites(favorites: self.favorites)
@@ -94,5 +98,22 @@ class HomePresenter {
             self.homeView?.dismissSearchControllerIfExists()
             self.homeView?.showAlert(name: error.name)
         }
+    }
+    
+    func setProductsToUserDefaults(products: [Product]) {
+        let dictOne: [String: String] = ["name": (products.first?.name)!,
+                                         "image": products.first?.image != nil ? (products.first?.image)! : ""]
+        let dictTwo: [String: String] = ["name": products[1].name!,
+                                         "image": products[1].image != nil ? products[1].image! : ""]
+        let dictThree: [String: String] = ["name": products[2].name!,
+                                           "image": products[2].image != nil ? products[2].image! : ""]
+        
+        var arrayDict = [[String: String]]()
+        arrayDict.append(dictOne)
+        arrayDict.append(dictTwo)
+        arrayDict.append(dictThree)
+        
+        let userDefaults = UserDefaults.init(suiteName: "group.com.games")
+        userDefaults?.set(arrayDict, forKey: "products")
     }
 }

@@ -9,8 +9,9 @@
 import UIKit
 import CoreData
 import CoreDataManager
+import MobileCoreServices
 
-class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UISearchControllerDelegate, UISearchBarDelegate, NSFetchedResultsControllerDelegate {
+class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDragDelegate, UICollectionViewDropDelegate, UISearchControllerDelegate, UISearchBarDelegate, NSFetchedResultsControllerDelegate, UIDropInteractionDelegate {
     
     @IBOutlet var collectionView: UICollectionView!
     
@@ -33,11 +34,11 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         searchController = UISearchController(searchResultsController: nil)
         searchController?.delegate = self
         searchController?.searchBar.delegate = self
-        searchController?.searchBar.showsCancelButton = true
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
         self.definesPresentationContext = true
         searchController?.searchBar.becomeFirstResponder()
+        
         setupCollectionView()
     }
     
@@ -53,6 +54,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         collectionView.refreshControl = refreshControl
         collectionView.register(UINib(nibName: productCell, bundle: nil), forCellWithReuseIdentifier: productCell)
         collectionView.isPagingEnabled = true
+        collectionView.dragDelegate = self
+        collectionView.dropDelegate = self
+        collectionView.dragInteractionEnabled = true
         longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongGesture(gesture:)))
         collectionView.addGestureRecognizer(longPressGesture)
         homePresenter.attachView(view: self)
@@ -127,7 +131,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 cell.setupProductCell(product: product, isFavorite: product.isFavorite!.boolValue)
             }
         }
-        
+        let dropInteraction = UIDropInteraction(delegate: self)
+
+        cell.addInteraction(dropInteraction)
         return cell
     }
     
@@ -163,7 +169,43 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         print(sourceIndexPath.item)
         print(destinationIndexPath.item)
     }
+    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        var selectedProduct: Product?
+        if searchActive {
+            selectedProduct = filteredArray[indexPath.row]
+        } else {
+            selectedProduct = productList.products?[indexPath.row]
+        }
+        let itemProvider = NSItemProvider(object: selectedProduct?.name as! NSString)
+        let dragItem = UIDragItem(itemProvider: itemProvider)
+        dragItem.localObject = selectedProduct
+        return [dragItem]
+    }
+
     
+    
+    func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
+    }
+    
+    //MARK: Drop Interaction Delegate
+    func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
+        return true
+    }
+    
+    func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
+        return UIDropProposal(operation: UIDropOperation.move)
+    }
+    
+    
+    func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
+        let ffi = session.items[0].localObject as! Product
+        // Necessary logic to parse the NSManagedObject
+    }
+    
+    func dropInteraction(_ interaction: UIDropInteraction, concludeDrop session: UIDropSession) {
+        
+    }
+
     //MARK: - SEARCH
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if(!(searchBar.text?.isEmpty)!){
@@ -248,4 +290,8 @@ extension HomeViewController: HomeView {
             isSearching = false
         }
     }
+}
+
+extension UITabBarController: UIDropInteractionDelegate {
+    
 }
