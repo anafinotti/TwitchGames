@@ -19,6 +19,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     private var productCell = "ProductCell"
     let homePresenter = HomePresenter(homeService: HomeService())
     fileprivate var productList = ProductList()
+    fileprivate var longPressGesture: UILongPressGestureRecognizer!
     var isSearching = false
     var searchController: UISearchController?
     private var refreshControl: UIRefreshControl?
@@ -52,8 +53,28 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         collectionView.refreshControl = refreshControl
         collectionView.register(UINib(nibName: productCell, bundle: nil), forCellWithReuseIdentifier: productCell)
         collectionView.isPagingEnabled = true
+        longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongGesture(gesture:)))
+        collectionView.addGestureRecognizer(longPressGesture)
         homePresenter.attachView(view: self)
         isSearching = true
+    }
+    
+    //MARK: Gesture Recognizer
+    @objc func handleLongGesture(gesture: UILongPressGestureRecognizer) {
+        switch(gesture.state) {
+            
+        case .began:
+            guard let selectedIndexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else {
+                break
+            }
+            collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
+        case .changed:
+            collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view!))
+        case .ended:
+            collectionView.endInteractiveMovement()
+        default:
+            collectionView.cancelInteractiveMovement()
+        }
     }
     
     //MARK: Core Data
@@ -133,6 +154,16 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             }
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        print(sourceIndexPath.item)
+        print(destinationIndexPath.item)
+    }
+    
     //MARK: - SEARCH
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if(!(searchBar.text?.isEmpty)!){
